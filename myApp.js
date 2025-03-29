@@ -74,10 +74,22 @@ const findPersonById = (personId, done) => {
   });
 };
 
+// 8. Perform Classic Updates by Running Find, Edit, then Save
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  Person.findById(personId, (err, person) => {
+    if (err) return console.log(err);
+
+    //Array.push() method to add "hamburger" to the list of the person's favoriteFoods
+    person.favoriteFoods.push(foodToAdd);
+
+    //and inside the find callback - save() the updated Person.
+    person.save((err, updatedPerson) => {
+      if (err) return console.log(err);
+      done(null, updatedPerson);
+    });
+  });
 };
 
 const findAndUpdate = (personName, done) => {
