@@ -108,8 +108,13 @@ const findAndUpdate = (personName, done) => {
   );
 };
 
+//10. Delete One Document Using model.findByIdAndRemove
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findByIdAndRemove(personId, (err, data) => {
+    if (err) return console.log(err);
+    done(null, data);
+  })
+ 
 };
 
 const removeManyPeople = (done) => {
