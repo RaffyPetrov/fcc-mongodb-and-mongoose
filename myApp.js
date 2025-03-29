@@ -4,28 +4,20 @@ const { Schema } = mongoose;
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //#1 Install and setup mongoose
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+// const mongoose = require("mongoose");
+
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-<<<<<<< HEAD
-const personSchema = new Schema({
-  name: {type: String, required : true }, age: Number, favoriteFoods: [String]
-});
-
-const Person = mongoose.model('Person', personSchema)
-=======
 //#2 Create a Model
 const personSchema = new mongoose.Schema({
   name: String,
   age: Number,
   favoriteFoods: [String]
 })
->>>>>>> fb6bf23 (Create and Save a Record of a Model)
 
 const Person = mongoose.model('Person', personSchema)
 
-//#3
+// 3. Create and Save a Record of a Model
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: 'Brian',
@@ -38,10 +30,23 @@ const createAndSavePerson = (done) => {
   });
 };
 
+// 4. Create Many Records with model.create()
+const arrayOfPeople = [
+  { name: 'Adam', age: 24, favoriteFoods: ['indomie noodle'] },
+  { name: 'Sola', age: 36, favoriteFoods: ['roasted yam'] },
+  { name: 'Colins', age: 48, favoriteFoods: ['Red wine'] },
+];
 
+var createManyPeople = function(arrayOfPeople, done) {
 
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, people) => {
+    if (err) {
+      console.log(err);
+    } else {
+      done(null, people);
+    }
+    
+  });
 };
 
 const findPeopleByName = (personName, done) => {
