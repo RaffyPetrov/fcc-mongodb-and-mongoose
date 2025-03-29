@@ -3,16 +3,42 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+//#1 Install and setup mongoose
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+<<<<<<< HEAD
 const personSchema = new Schema({
   name: {type: String, required : true }, age: Number, favoriteFoods: [String]
 });
 
 const Person = mongoose.model('Person', personSchema)
+=======
+//#2 Create a Model
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favoriteFoods: [String]
+})
+>>>>>>> fb6bf23 (Create and Save a Record of a Model)
 
+const Person = mongoose.model('Person', personSchema)
+
+//#3
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const person = new Person({
+    name: 'Brian',
+    age: 26,
+    favoriteFoods: ['Rice', 'Beans', 'Oat'],
+  });
+  person.save((err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
+
+
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
